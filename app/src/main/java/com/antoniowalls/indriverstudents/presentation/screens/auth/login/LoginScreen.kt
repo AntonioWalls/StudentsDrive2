@@ -2,6 +2,7 @@ package com.antoniowalls.indriverstudents.presentation.screens.auth.login
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -44,11 +45,14 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavHostController
+import androidx.navigation.compose.rememberNavController
 import com.antoniowalls.indriverstudents.R
 import com.antoniowalls.indriverstudents.presentation.components.DefaultTextField
+import com.antoniowalls.indriverstudents.presentation.navigation.screen.auth.AuthScreen
 
 @Composable
-fun LoginScreen() {
+fun LoginScreen(navHostController: NavHostController) {
     var email by remember {
         mutableStateOf("")
     }
@@ -81,7 +85,10 @@ fun LoginScreen() {
                     color = Color.White,
                     fontSize = 35.sp,
                     fontWeight = FontWeight.Bold,
-                    modifier = Modifier.rotate(90f).padding(top = 10.dp)
+                    modifier = Modifier
+                        .rotate(90f)
+                        .padding(top = 10.dp)
+                        .clickable { navHostController.navigate(route = AuthScreen.Login.route)}
                 )
                 //se usa dp para anchuras, alturas y todito lo que tiene que ver con dimensiones
                 //sp para el tamaño de fuente
@@ -91,7 +98,10 @@ fun LoginScreen() {
                     color = Color.White,
                     fontSize = 27.sp,
                     fontWeight = FontWeight.Light,
-                    modifier = Modifier.rotate(90f).padding(top = 30.dp)
+                    modifier = Modifier
+                        .rotate(90f)
+                        .padding(top = 30.dp)
+                        .clickable { navHostController.navigate(route = AuthScreen.Register.route)}
                 )
                 Spacer(modifier = Modifier.height(250.dp))
             }
@@ -237,21 +247,13 @@ fun LoginScreen() {
     }
 }
 
-
-
-//ESTA COSA ES SOLO PARA VER UN PREVIEW
-@Preview(
-    showBackground = true, // Muestra un fondo predeterminado para el Composable.
-    name = "Login Screen Preview" // Nombre opcional para la vista previa.
-    // Puedes añadir más parámetros como:
-    // device = Devices.PIXEL_4 // Previsualizar en un dispositivo específico
-    // uiMode = Configuration.UI_MODE_NIGHT_YES // Previsualizar en modo oscuro
-)
+// --- Función de Preview ---
+@Preview(showSystemUi = true, name = "Login Screen Preview") // showSystemUi muestra barras de estado/navegación
 @Composable
-fun DefaultPreview() {
-    // Es común crear una función Composable separada solo para la vista previa,
-    // que simplemente llama a tu Composable principal.
-    // Aquí podrías envolver LoginScreen con un tema si tu app lo usa.
-    // Ejemplo: TuAppTheme { LoginScreen() }
-    LoginScreen()
+fun LoginScreenPreview() {
+    // Crea un NavController falso para el preview
+    val navController = rememberNavController()
+    // Llama a tu LoginScreen pasando el NavController falso
+    // Podrías envolver esto en tu tema de la app si tienes uno: TuAppTheme { LoginScreen(...) }
+    LoginScreen(navHostController = navController)
 }

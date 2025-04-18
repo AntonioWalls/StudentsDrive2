@@ -69,11 +69,30 @@ fun DefaultTextField(
           keyboardOptions = KeyboardOptions(keyboardType = keyboardType),
           visualTransformation = if(hideText) PasswordVisualTransformation() else VisualTransformation.None,
           colors = TextFieldDefaults.colors(
+              // --- Color del Texto ---
+              focusedTextColor = Color.Black,
+              unfocusedTextColor = Color.Black,
+
+              // --- Colores del Contenedor (Fondo del TextField) ---
               focusedContainerColor = Color.Transparent,
               unfocusedContainerColor = Color.Transparent,
+              disabledContainerColor = Color.Transparent,
+
+              // --- Colores del Indicador (línea inferior) ---
               focusedIndicatorColor = Color.Transparent,
               unfocusedIndicatorColor = Color.Transparent,
               disabledIndicatorColor = Color.Transparent,
+              errorIndicatorColor = Color.Transparent,
+
+              // --- Colores de Iconos y Etiqueta ---
+              // CAMBIO: Icono negro cuando está enfocado
+              focusedLeadingIconColor = Color.Black,
+              // CAMBIO: Icono gris cuando NO está enfocado
+              unfocusedLeadingIconColor = Color.Gray,
+              focusedLabelColor = Color(0xFFB1B1B1),
+              unfocusedLabelColor = Color(0xFFB1B1B1),
+
+              cursorColor = Color.Black
           )
 
       )
