@@ -18,7 +18,13 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Email
+import androidx.compose.material.icons.filled.Lock
+import androidx.compose.material.icons.outlined.Email
+import androidx.compose.material.icons.outlined.Lock
 import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
@@ -34,10 +40,12 @@ import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.antoniowalls.indriverstudents.R
+import com.antoniowalls.indriverstudents.presentation.components.DefaultTextField
 
 @Composable
 fun LoginScreen() {
@@ -57,7 +65,7 @@ fun LoginScreen() {
                 .fillMaxSize()
                 .background(
                     brush = Brush.linearGradient(
-                        colors = listOf(Color(0xFFAC9E1F), Color(0xFFFFE91F))
+                        colors = listOf(Color(0xFF6D6ADC), Color(0xFF4F90FC))
                     )
                 )
                 .padding(paddingValues)
@@ -82,19 +90,20 @@ fun LoginScreen() {
                     text = "Registro",
                     color = Color.White,
                     fontSize = 27.sp,
-                    fontWeight = FontWeight.Medium,
+                    fontWeight = FontWeight.Light,
                     modifier = Modifier.rotate(90f).padding(top = 30.dp)
                 )
                 Spacer(modifier = Modifier.height(250.dp))
             }
         }
+
         Box(
             modifier = Modifier
                 .fillMaxSize()
                 .padding(start = 60.dp, bottom = 35.dp)
                 .background(
                     brush = Brush.linearGradient(
-                        colors = listOf(Color(0xFF871EFE), Color(0xFFF3CE00))
+                        colors = listOf(Color(0xFF292C83), Color(0xFF4E79E3))
                     ),
                     shape = RoundedCornerShape(
                         topStart = 35.dp,
@@ -104,73 +113,106 @@ fun LoginScreen() {
 
         ) {
             Column(
-                modifier = Modifier.statusBarsPadding()
+                modifier = Modifier.statusBarsPadding().padding(start = 25.dp)
             ) {
                 Spacer(modifier = Modifier.height(20.dp))
                 Text(
                     text = "Bienvenido!",
                     color = Color.White,
-                    fontSize = 30.sp,
+                    fontSize = 35.sp,
                     fontWeight = FontWeight.Bold
                 )
                 Text(
-                    text = "Regresa...",
+                    text = "de nuevo...",
                     color = Color.White,
-                    fontSize = 30.sp,
+                    fontSize = 35.sp,
                     fontWeight = FontWeight.Medium
                 )
-                Image(
-                    modifier = Modifier.size(150.dp),
-                    painter = painterResource(id = R.drawable.car_white),
-                    contentDescription = null,
-                )
+                Box(
+                    modifier = Modifier.fillMaxWidth().padding(end = 25.dp)
+                ){
+                    Image(
+                        modifier = Modifier
+                            .size(180.dp)
+                            .align(Alignment.CenterEnd),
+                        painter = painterResource(id = R.drawable.car_white),
+                        contentDescription = null,
+                    )
+                }
+
                 Text(
-                    text = "Log in...",
+                    text = "Log in",
                     color = Color.White,
                     fontSize = 27.sp,
                     fontWeight = FontWeight.Medium
                 )
-                TextField(
+                Spacer(modifier = Modifier.height(50.dp))
+                //textfield de correo electrónico
+                DefaultTextField(
+                    modifier = Modifier,
                     value = email,
+                    label = "Correo electrónico",
+                    icon = Icons.Outlined.Email,
                     onValueChange = {
                         email = it
                     },
-                    label = { Text("Correo electrónico") },
+                    keyboardType = KeyboardType.Email
                 )
-                TextField(
+
+                Spacer(modifier = Modifier.height(20.dp))
+                //textfield de contraseña
+                DefaultTextField(
+                    modifier = Modifier,
                     value = password,
+                    label = "Contraseña",
+                    icon = Icons.Outlined.Lock,
                     onValueChange = {
                         password = it
                     },
-                    label = { Text("Contraseña") },
+                    keyboardType = KeyboardType.Password,
+                    hideText = true
                 )
-                Button(
-                    onClick = { }
-                ) {
-                    Text("Iniciar sesión")
+                Spacer(modifier = Modifier.weight(1f))
+                Box(
+                    modifier = Modifier
+                        .fillMaxWidth(),
+                ){
+                    Button(
+                        modifier = Modifier
+                            .align(Alignment.Center)
+                            .width(250.dp)
+                            .height(55.dp),
+                        onClick = { },
+                        colors = ButtonDefaults.buttonColors(Color.Black)
+                    ) {
+                        Text("Iniciar sesión", fontSize = 18.sp, color = Color.White)
+                    }
                 }
+                Spacer(modifier = Modifier.height(25.dp))
                 Row(
                     modifier = Modifier.fillMaxWidth(),
-                    horizontalArrangement = Arrangement.Center
+                    horizontalArrangement = Arrangement.Center,
+                    verticalAlignment = Alignment.CenterVertically
                 ){
                     Spacer(modifier = Modifier
-                        .width(25.dp)
+                        .width(30.dp)
                         .height(1.dp)
                         .background(Color.White)
                     )
                     Text(
+                        modifier = Modifier.padding(horizontal = 7.dp),
                         text = "O",
                         color = Color.White,
                         fontSize = 17.sp,
                     )
                     Spacer(modifier = Modifier
-                        .width(25.dp)
+                        .width(30.dp)
                         .height(1.dp)
                         .background(Color.White)
                     )
 
                 }
-
+                Spacer(modifier = Modifier.height(20.dp))
                 Row(
                     modifier = Modifier.fillMaxWidth(),
                     horizontalArrangement = Arrangement.Center
@@ -180,6 +222,7 @@ fun LoginScreen() {
                         color = Color.White,
                         fontSize = 17.sp,
                     )
+                    Spacer(modifier = Modifier.width(5.dp))
                     Text(
                         text = "registrate?",
                         color = Color.White,
@@ -187,6 +230,7 @@ fun LoginScreen() {
                         fontWeight = FontWeight.Bold
                     )
                 }
+                Spacer(modifier= Modifier.height(60.dp))
             }
         }
 
