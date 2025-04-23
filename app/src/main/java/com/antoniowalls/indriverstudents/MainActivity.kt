@@ -17,7 +17,9 @@ import androidx.navigation.compose.rememberNavController
 import com.antoniowalls.indriverstudents.presentation.navigation.graph.root.RootNavGraph
 import com.antoniowalls.indriverstudents.presentation.screens.auth.login.LoginScreen
 import com.antoniowalls.indriverstudents.ui.theme.InDriverStudentsTheme
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class MainActivity : ComponentActivity() {
     private lateinit var navController: NavHostController;
     override fun onCreate(savedInstanceState: Bundle?) {
