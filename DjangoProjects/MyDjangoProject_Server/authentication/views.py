@@ -1,10 +1,12 @@
+from django.shortcuts import get_object_or_404
 from django.shortcuts import render
 import bcrypt
 from rest_framework.response import Response
 from rest_framework.decorators import api_view
 from rest_framework import status
+from roles.models import Role
 from users.serializers import UserSerializer
-from users.models import User
+from users.models import User, UserHasRoles
 from rest_framework_simplejwt.tokens import RefreshToken
 # Create your views here.
 #aquí se van a crear las operaciones del CRUD
@@ -15,7 +17,11 @@ from rest_framework_simplejwt.tokens import RefreshToken
 def register(request):
     serializer = UserSerializer(data = request.data)
     if serializer.is_valid():
-        serializer.save()
+        user = serializer.save()
+        
+        client_role = get_object_or_404(Role, id = 'CLIENT')
+        UserHasRoles.objects.create(id_user=user, id_rol = client_role)
+        
         return Response(serializer.data, status = status.HTTP_201_CREATED)
     return Response(serializer.errors, status = status.HTTP_400_BAD_REQUEST)
  #Metodo POST el cual valida el login del usuario por medio de validaciones

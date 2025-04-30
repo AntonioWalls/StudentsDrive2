@@ -40,7 +40,8 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'rest_framework',
     'users', #Modulo de usuarios
-    'authentication' #Modulo de autenticación
+    'authentication', #Modulo de autenticación
+    'roles' #Modulo o tabla de roles
 ]
 
 MIDDLEWARE = [
