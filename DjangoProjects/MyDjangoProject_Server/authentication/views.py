@@ -10,7 +10,7 @@ from users.models import User, UserHasRoles
 from rest_framework_simplejwt.tokens import RefreshToken
 # Create your views here.
 #aquí se van a crear las operaciones del CRUD
-
+#este es un cambio
 #status 200 para respuestas exitosas
 #400 o 500 para los errores
 @api_view(['POST'])
