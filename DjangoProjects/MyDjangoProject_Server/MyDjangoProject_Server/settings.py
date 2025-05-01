@@ -10,6 +10,7 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/5.2/ref/settings/
 """
 
+import os
 from pathlib import Path
 from datetime import timedelta
 
@@ -39,6 +40,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'rest_framework',
+    'rest_framework_simplejwt',
     'users', #Modulo de usuarios
     'authentication', #Modulo de autenticación
     'roles' #Modulo o tabla de roles
@@ -109,8 +111,11 @@ AUTH_PASSWORD_VALIDATORS = [
 #Aquí se hace el manejo del JWT token para el acceso
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': (
-        'rest_framework_simplejwt.authentication.JWTAuthentication',
-    )
+        'authentication.customJWTAuthentication.CustomJWTAuthentication',
+    ),
+    'DEFAULT_PERMISSION_CLASSES': (
+        'rest_framework.permissions.IsAuthenticated'
+    ),
 }
 #Aquí defines un token de autenticación el cual dura una hora, pero si el usuario vuelve a iniciar la app dentro de un día puede volver a tener una sesión de 60 minutos
 SIMPLE_JWT = {
@@ -145,3 +150,6 @@ STATIC_URL = 'static/'
 # https://docs.djangoproject.com/en/5.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+MEDIA_URL = '/media/'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')

@@ -2,19 +2,31 @@ from django.shortcuts import get_object_or_404
 from django.shortcuts import render
 import bcrypt
 from rest_framework.response import Response
-from rest_framework.decorators import api_view
+from rest_framework.decorators import api_view, permission_classes
 from rest_framework import status
 from roles.models import Role
 from roles.serializers import RoleSerializer
 from users.serializers import UserSerializer
 from users.models import User, UserHasRoles
 from rest_framework_simplejwt.tokens import RefreshToken
+from rest_framework.permissions import AllowAny
 # Create your views here.
 #aquí se van a crear las operaciones del CRUD
 #este es un cambio
 #status 200 para respuestas exitosas
 #400 o 500 para los errores
+
+
+def getCustomTokenForUser(user):
+    refresh_token = RefreshToken.for_user(user)
+    del refresh_token.payload['user_id']
+    refresh_token.payload['id'] = user.id
+    refresh_token.payload['name'] = user.name
+    return refresh_token
+
+
 @api_view(['POST'])
+@permission_classes([AllowAny])
 def register(request):
     serializer = UserSerializer(data = request.data)
     if serializer.is_valid():
@@ -45,6 +57,7 @@ def register(request):
     return Response(error_response, status = status.HTTP_400_BAD_REQUEST)
  #Metodo POST el cual valida el login del usuario por medio de validaciones
 @api_view(['POST'])
+@permission_classes([AllowAny])
 def login(request):
     email = request.data.get('email')
     password = request.data.get('password')
@@ -70,7 +83,7 @@ def login(request):
     
     #Aquí se hace una comparación de los password encriptado y el no encriptado
     if bcrypt.checkpw(password.encode('utf-8'), user.password.encode('utf-8')):
-        refresh_token = RefreshToken.for_user(user)
+        refresh_token = getCustomTokenForUser(user)
         access_token = str(refresh_token.access_token) #aquí se genera el token de autenticación único para cada usuario
         roles = Role.objects.filter(userhasroles__id_user=user)
         roles_serializer = RoleSerializer(roles, many=True)
@@ -82,7 +95,7 @@ def login(request):
                 "lastname": user.lastname,
                 "email": user.email,
                 "phone": user.phone,
-                "image": user.phone,
+                "image": user.image,
                 "notification_token": user.notification_token,
                 "roles": roles_serializer.data,
             },
@@ -97,4 +110,3 @@ def login(request):
             },
             status = status.HTTP_401_UNAUTHORIZED
         )
- 
