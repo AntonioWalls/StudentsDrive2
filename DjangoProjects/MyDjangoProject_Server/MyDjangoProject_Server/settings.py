@@ -27,7 +27,9 @@ SECRET_KEY = 'django-insecure--vrwbz$w^)ffs_@$_)cjzkx2lglzr86kqr8t=%#@p(zm&7l*ix
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['192.168.1.11'] #Dirección IP que puede cambiar en el proyecto cada que reinicia la computadora
+GLOBAL_IP='192.168.1.2'
+GLOBAL_HOST= '3000'
+ALLOWED_HOSTS = [GLOBAL_IP] #Dirección IP que puede cambiar en el proyecto cada que reinicia la computadora
 
 
 # Application definition
@@ -119,7 +121,7 @@ REST_FRAMEWORK = {
 }
 #Aquí defines un token de autenticación el cual dura una hora, pero si el usuario vuelve a iniciar la app dentro de un día puede volver a tener una sesión de 60 minutos
 SIMPLE_JWT = {
-    'ACCESS_TOKEN_LIFETIME': timedelta(minutes=60),
+    'ACCESS_TOKEN_LIFETIME': timedelta(hours=3),
     'REFRESH_TOKE_LIFETIME': timedelta(days=1),
     'ROTATE_REFRESH_TOKENS': True,
     'BLACKLIST_AFTER_ROTATION': True,

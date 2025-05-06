@@ -8,10 +8,74 @@ from roles.models import Role
 from roles.serializers import RoleSerializer
 from users.models import User, UserHasRoles
 from django.core.files.base import ContentFile
+from django.conf import settings
 
+#Método que regresa un usuario por ID
+@api_view(['GET'])
+@permission_classes([IsAuthenticated])
+def get_user_by_id(request, id_user):
+    try:
+        user = User.objects.get(id=id_user)
+    except User.DoesNotExist:
+        return Response(
+            {
+                "message": "El usuario no existe",
+                "statusCode": status.HTTP_404_NOT_FOUND
+            },
+            status=status.HTTP_400_BAD_REQUEST
+        )
+    roles = Role.objects.filter(userhasroles__id_user=user)
+    roles_serializer = RoleSerializer(roles, many=True)
+    user_data= {
+            "id": user.id,
+            "name": user.name,
+            "lastname": user.lastname,
+            "email": user.email,
+            "phone": user.phone,
+            "image": f'http://{settings.GLOBAL_IP}:{settings.GLOBAL_HOST}{user.image}' if user.image else None,
+            "notification_token": user.notification_token,
+            "roles": roles_serializer.data,
+        }
+    return Response(user_data, status=status.HTTP_200_OK)
+
+#Método para conseguir una lista de todos los usuarios
+@api_view(['GET'])
+@permission_classes([IsAuthenticated])
+def get_all_users(request):
+    users = User.objects.all()
+    all_users_data = []
+
+    for user in users:
+        roles = Role.objects.filter(userhasroles__id_user=user)
+        roles_serializer = RoleSerializer(roles, many=True)
+        user_data = {
+            "id": user.id,
+            "name": user.name,
+            "lastname": user.lastname,
+            "email": user.email,
+            "phone": user.phone,
+            "image": f'http://{settings.GLOBAL_IP}:{settings.GLOBAL_HOST}{user.image}' if user.image else None,
+            "notification_token": user.notification_token,
+            "roles": roles_serializer.data,
+        }
+        all_users_data.append(user_data)
+
+    
+    return Response(all_users_data, status=status.HTTP_200_OK)
+
+
+#Método para poder actualizar un usuario
 @api_view(['PUT'])
 @permission_classes([IsAuthenticated])
 def update(request, id_user):
+    if str(request.user.id) != str(id_user):
+        return Response(
+            {
+                "message": "No tienes permisos para actualizar este usuario",
+                "statusCode": status.HTTP_403_FORBIDDEN
+            },
+            status=status.HTTP_400_BAD_REQUEST
+        )
     try:
         user = User.objects.get(id=id_user)
     except User.DoesNotExist:
@@ -48,22 +112,28 @@ def update(request, id_user):
     roles_serializer = RoleSerializer(roles, many=True)
         
     user_data= {
-            "user": {
-                "id": user.id,
-                "name": user.name,
-                "lastname": user.lastname,
-                "email": user.email,
-                "phone": user.phone,
-                "image": user.image,
-                "notification_token": user.notification_token,
-                "roles": roles_serializer.data,
-            },
+            "id": user.id,
+            "name": user.name,
+            "lastname": user.lastname,
+            "email": user.email,
+            "phone": user.phone,
+            "image": f'http://{settings.GLOBAL_IP}:{settings.GLOBAL_HOST}{user.image}' if user.image else None,
+            "notification_token": user.notification_token,
+            "roles": roles_serializer.data,
         }
     return Response(user_data, status = status.HTTP_200_OK)
 
 @api_view(['PUT'])
 @permission_classes([IsAuthenticated])
 def updateWithImage(request, id_user):
+    if str(request.user.id) != str(id_user):
+        return Response(
+            {
+                "message": "No tienes permisos para actualizar este usuario",
+                "statusCode": status.HTTP_403_FORBIDDEN
+            },
+            status=status.HTTP_400_BAD_REQUEST
+        )
     try:
         user = User.objects.get(id=id_user)
     except User.DoesNotExist:
@@ -107,15 +177,13 @@ def updateWithImage(request, id_user):
     roles_serializer = RoleSerializer(roles, many=True)
         
     user_data= {
-            "user": {
-                "id": user.id,
-                "name": user.name,
-                "lastname": user.lastname,
-                "email": user.email,
-                "phone": user.phone,
-                "image": user.image,
-                "notification_token": user.notification_token,
-                "roles": roles_serializer.data,
-            },
+            "id": user.id,
+            "name": user.name,
+            "lastname": user.lastname,
+            "email": user.email,
+            "phone": user.phone,
+            "image": f'http://{settings.GLOBAL_IP}:{settings.GLOBAL_HOST}{user.image}' if user.image else None,
+            "notification_token": user.notification_token,
+            "roles": roles_serializer.data,
         }
     return Response(user_data, status = status.HTTP_200_OK)
