@@ -6,12 +6,15 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
+import com.antoniowalls.indriverstudents.domain.useCases.auth.AuthUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 //Aquí en el viewModel es donde tendremos los estados del login
 @HiltViewModel
-class LoginViewModel @Inject constructor() : ViewModel() {
+class LoginViewModel @Inject constructor(private val authUseCase: AuthUseCase) : ViewModel() {
     var state by mutableStateOf(LoginState())
         private set
 
@@ -25,9 +28,11 @@ class LoginViewModel @Inject constructor() : ViewModel() {
         state = state.copy(password = password)
     }
 
-    fun login() {
+    fun login() = viewModelScope.launch { //todo lo que está dentro de viewModelScope.launch es una corrutina y se ejecuta de manera asincrona
         if (isValidForm()) {
-            Log.d("LoginViewModel", "Email: ${state.email}, Password: ${state.password}")
+
+            val result = authUseCase.login(state.email, state.password)
+
         } else {
             Log.d("LoginViewModel", errorMessage)
 

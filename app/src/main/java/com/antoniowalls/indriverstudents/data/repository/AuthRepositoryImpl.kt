@@ -1,0 +1,29 @@
+package com.antoniowalls.indriverstudents.data.repository
+
+import android.util.Log
+import com.antoniowalls.indriverstudents.data.dataSource.remote.service.AuthService
+import com.antoniowalls.indriverstudents.domain.model.AuthResponse
+import com.antoniowalls.indriverstudents.domain.repository.AuthRepository
+import com.antoniowalls.indriverstudents.domain.util.Resource
+
+//una vez hecha la inyección de depdencias de authservice con su tipo de retorno, creamos el repositorio
+class AuthRepositoryImpl(private val authService: AuthService): AuthRepository {
+    override suspend fun login(email: String, password: String): Resource<AuthResponse> {
+        return try{
+            val result = authService.login(email, password)
+            if (result.isSuccessful){
+                Log.d("AuthRespositoryImpl", "Data Success ${result.body()}")
+                Resource.Success(result.body()!!) //el !! sirve para los nulos
+            } else{
+                Log.d("AuthRespositoryImpl", "Error en la petición")
+                Resource.Failure("Error en la petición" )
+            }
+
+        } catch (e: Exception){
+            Log.d("AuthRespositoryImpl", "Message: ${e}")
+            Log.d("AuthRespositoryImpl", "Message Cause: ${e.cause}")
+            e.printStackTrace()
+            Resource.Failure(e.message ?: "Error desconocido" )
+        }
+    }
+}
