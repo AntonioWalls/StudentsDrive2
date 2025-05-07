@@ -7,18 +7,23 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.antoniowalls.indriverstudents.domain.useCases.auth.AuthUseCase
+import com.antoniowalls.indriverstudents.domain.model.AuthResponse
+import com.antoniowalls.indriverstudents.domain.useCases.auth.AuthUseCases
+import com.antoniowalls.indriverstudents.domain.util.Resource
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 //Aquí en el viewModel es donde tendremos los estados del login
 @HiltViewModel
-class LoginViewModel @Inject constructor(private val authUseCase: AuthUseCase) : ViewModel() {
+class LoginViewModel @Inject constructor(private val authUseCase: AuthUseCases) : ViewModel() {
     var state by mutableStateOf(LoginState())
         private set
 
     var errorMessage by mutableStateOf("")
+
+    var loginResponse by mutableStateOf<Resource<AuthResponse>?>(null)
+        private set
 
     fun onEmailInput(email: String) {
         state = state.copy(email = email)
@@ -30,9 +35,9 @@ class LoginViewModel @Inject constructor(private val authUseCase: AuthUseCase) :
 
     fun login() = viewModelScope.launch { //todo lo que está dentro de viewModelScope.launch es una corrutina y se ejecuta de manera asincrona
         if (isValidForm()) {
-
+            loginResponse = Resource.Loading
             val result = authUseCase.login(state.email, state.password)
-
+            loginResponse = result //SUCCEESS o FAILURE
         } else {
             Log.d("LoginViewModel", errorMessage)
 

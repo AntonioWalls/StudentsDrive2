@@ -6,6 +6,8 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
+import com.antoniowalls.indriverstudents.presentation.navigation.screen.auth.AuthScreen.Login
+import com.antoniowalls.indriverstudents.presentation.screens.auth.login.components.Login
 import com.antoniowalls.indriverstudents.presentation.screens.auth.login.components.LoginContent
 
 
@@ -16,6 +18,7 @@ fun LoginScreen(navHostController: NavHostController) {
     ){ paddingValues -> //aquí se diseña  como si fuera un HTML
         LoginContent(navHostController = navHostController, paddingValues = paddingValues)
     }
+    Login()
 }
 
 // --- Función de Preview ---

@@ -1,7 +1,7 @@
 package com.antoniowalls.indriverstudents.di
 
-import com.antoniowalls.indriverstudents.data.dataSource.remote.service.AuthService
-import com.antoniowalls.indriverstudents.data.repository.AuthRepositoryImpl
+import com.antoniowalls.indriverstudents.data.remote.dataSource.remote.service.AuthService
+import com.antoniowalls.indriverstudents.data.remote.repository.AuthRepositoryImpl
 import com.antoniowalls.indriverstudents.domain.repository.AuthRepository
 import dagger.Module
 import dagger.Provides

@@ -6,23 +6,30 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
+import com.antoniowalls.indriverstudents.domain.model.AuthResponse
+import com.antoniowalls.indriverstudents.domain.model.User
+import com.antoniowalls.indriverstudents.domain.useCases.auth.AuthUseCases
+import com.antoniowalls.indriverstudents.domain.util.Resource
+import com.antoniowalls.indriverstudents.presentation.screens.auth.register.mapper.toUser
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel //todo ViewModel necesita este arroba para poderse inyectar en otras clases
-class RegisterViewModel @Inject constructor(): ViewModel() { //y siempre se van declarar las clases de esta manera
+class RegisterViewModel @Inject constructor(private val authUseCases: AuthUseCases): ViewModel() { //y siempre se van declarar las clases de esta manera
     var state by mutableStateOf(RegisterState()) //esta cosa de aquí sirve para controlar los estados
         private set
     var errorMessage by mutableStateOf("") //variable para recoger los errores
 
-    fun register(){
+    var registerResponse by mutableStateOf<Resource<AuthResponse>?>(null)
+        private set
+
+    fun register()= viewModelScope.launch{ // el viewModelScope.launch sirve para que se ejecute una corrutina dentro del viewModel
         if(isValidForm()){
-            Log.d("RegisterViewModel", "Name: ${state.name}")
-            Log.d("RegisterViewModel", "LastName: ${state.lastname}")
-            Log.d("RegisterViewModel", "Email: ${state.email}")
-            Log.d("RegisterViewModel", "Phone: ${state.phone}")
-            Log.d("RegisterViewModel", "Password: ${state.password}")
-            Log.d("RegisterViewModel", "ConfirmPassword: ${state.confirmPassword}")
+            registerResponse = Resource.Loading
+            val result = authUseCases.register(state.toUser())
+            registerResponse = result //SUCCESS o FAILURE
         }
         else{
             Log.d("RegisterViewModel", errorMessage)

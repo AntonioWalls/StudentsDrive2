@@ -47,6 +47,7 @@ import com.antoniowalls.indriverstudents.R
 import com.antoniowalls.indriverstudents.presentation.components.DefaultButton
 import com.antoniowalls.indriverstudents.presentation.components.DefaultOutlinedTextField
 import androidx.compose.foundation.layout.Row
+import com.antoniowalls.indriverstudents.presentation.screens.auth.register.components.Register
 import com.antoniowalls.indriverstudents.presentation.screens.auth.register.components.RegisterContent
 
 
@@ -56,6 +57,7 @@ fun RegisterScreen(navHostController: NavHostController) {
     Scaffold{ paddingValues ->
         RegisterContent(navHostController = navHostController, paddingValues = paddingValues)
     }
+    Register()
 }
 
 @Preview(showBackground = true, showSystemUi = true) // Anotación para habilitar la vista previa

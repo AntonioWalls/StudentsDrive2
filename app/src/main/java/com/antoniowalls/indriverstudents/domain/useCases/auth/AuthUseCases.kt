@@ -4,6 +4,7 @@ import javax.inject.Inject
 
 
 //aquí almacena todos los casos de este modulo
-data class AuthUseCase @Inject constructor (
-    val login: LoginUseCase
+data class AuthUseCases @Inject constructor (
+    val login: LoginUseCase,
+    val register: RegisterUseCase
 )

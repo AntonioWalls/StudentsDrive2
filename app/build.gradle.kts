@@ -51,6 +51,10 @@ dependencies {
     implementation(libs.androidx.ui.tooling.preview)
     implementation(libs.androidx.material3)
 
+    implementation("androidx.datastore:datastore-preferences:1.1.1")
+
+
+    implementation("com.squareup.moshi:moshi-kotlin:1.15.2")
 
     implementation ("com.google.code.gson:gson:2.13.1")
     implementation ("com.squareup.retrofit2:retrofit:2.11.0")
