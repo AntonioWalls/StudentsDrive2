@@ -25,6 +25,10 @@ class LoginViewModel @Inject constructor(private val authUseCase: AuthUseCases) 
     var loginResponse by mutableStateOf<Resource<AuthResponse>?>(null)
         private set
 
+    init{
+        getSessionData()
+    }
+
     fun onEmailInput(email: String) {
         state = state.copy(email = email)
     }
@@ -42,6 +46,16 @@ class LoginViewModel @Inject constructor(private val authUseCase: AuthUseCases) 
             Log.d("LoginViewModel", errorMessage)
 
         }
+    }
+
+    fun getSessionData() = viewModelScope.launch {
+        authUseCase.getSessionData().collect(){ data ->
+            Log.d("LoginViewModel", "Datos de sesión: $data")
+        }
+    }
+
+    fun saveSession(authResponse: AuthResponse) = viewModelScope.launch {
+        authUseCase.saveSession(authResponse)
     }
 
     fun isValidForm(): Boolean{

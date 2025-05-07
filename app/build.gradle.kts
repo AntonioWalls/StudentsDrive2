@@ -51,7 +51,7 @@ dependencies {
     implementation(libs.androidx.ui.tooling.preview)
     implementation(libs.androidx.material3)
 
-    implementation("androidx.datastore:datastore-preferences:1.1.1")
+    implementation("androidx.datastore:datastore-preferences:1.0.0")
 
 
     implementation("com.squareup.moshi:moshi-kotlin:1.15.2")

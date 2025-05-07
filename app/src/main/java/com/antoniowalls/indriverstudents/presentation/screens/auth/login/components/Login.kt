@@ -23,6 +23,7 @@ fun Login(vm: LoginViewModel = hiltViewModel()) {
             ProgressBar()
         }
         is Resource.Success -> {
+            vm.saveSession(response.data)
             Toast.makeText(context, "Login Exitoso", Toast.LENGTH_LONG).show()
         }
         is Resource.Failure -> {
