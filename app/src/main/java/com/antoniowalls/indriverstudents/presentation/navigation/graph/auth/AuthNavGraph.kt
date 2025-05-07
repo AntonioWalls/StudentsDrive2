@@ -10,6 +10,7 @@ import com.antoniowalls.indriverstudents.presentation.navigation.graph.client.Cl
 import com.antoniowalls.indriverstudents.presentation.navigation.screen.auth.AuthScreen
 import com.antoniowalls.indriverstudents.presentation.screens.auth.login.LoginScreen
 import com.antoniowalls.indriverstudents.presentation.screens.auth.register.RegisterScreen
+import com.antoniowalls.indriverstudents.presentation.screens.client.home.ClientHomeScreen
 
 fun NavGraphBuilder.AuthNavGraph(navHostController: NavHostController) {
     navigation(
@@ -18,6 +19,7 @@ fun NavGraphBuilder.AuthNavGraph(navHostController: NavHostController) {
     ){
         composable(route = AuthScreen.Login.route){ LoginScreen(navHostController) }
         composable(route = AuthScreen.Register.route){ RegisterScreen(navHostController) }
-        ClientNavGraph(navHostController)
+        composable(route = Graph.CLIENT){ ClientHomeScreen() }
+
     }
 }
