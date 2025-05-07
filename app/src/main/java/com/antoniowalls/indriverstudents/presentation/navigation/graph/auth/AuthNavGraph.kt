@@ -6,6 +6,7 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.composable
 import androidx.navigation.navigation
 import com.antoniowalls.indriverstudents.presentation.navigation.Graph
+import com.antoniowalls.indriverstudents.presentation.navigation.graph.client.ClientNavGraph
 import com.antoniowalls.indriverstudents.presentation.navigation.screen.auth.AuthScreen
 import com.antoniowalls.indriverstudents.presentation.screens.auth.login.LoginScreen
 import com.antoniowalls.indriverstudents.presentation.screens.auth.register.RegisterScreen
@@ -17,5 +18,6 @@ fun NavGraphBuilder.AuthNavGraph(navHostController: NavHostController) {
     ){
         composable(route = AuthScreen.Login.route){ LoginScreen(navHostController) }
         composable(route = AuthScreen.Register.route){ RegisterScreen(navHostController) }
+        ClientNavGraph(navHostController)
     }
 }

@@ -57,7 +57,7 @@ fun RegisterScreen(navHostController: NavHostController) {
     Scaffold{ paddingValues ->
         RegisterContent(navHostController = navHostController, paddingValues = paddingValues)
     }
-    Register()
+    Register(navHostController)
 }
 
 @Preview(showBackground = true, showSystemUi = true) // Anotación para habilitar la vista previa

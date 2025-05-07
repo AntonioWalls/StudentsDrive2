@@ -51,6 +51,10 @@ class LoginViewModel @Inject constructor(private val authUseCase: AuthUseCases) 
     fun getSessionData() = viewModelScope.launch {
         authUseCase.getSessionData().collect(){ data ->
             Log.d("LoginViewModel", "Datos de sesión: $data")
+            if(!data.token.isNullOrBlank()){ //token de sesión existe y además no está vacío
+                loginResponse = Resource.Success(data)
+            }
+
         }
     }
 

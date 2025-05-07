@@ -18,7 +18,7 @@ fun LoginScreen(navHostController: NavHostController) {
     ){ paddingValues -> //aquí se diseña  como si fuera un HTML
         LoginContent(navHostController = navHostController, paddingValues = paddingValues)
     }
-    Login()
+    Login(navHostController)
 }
 
 // --- Función de Preview ---
