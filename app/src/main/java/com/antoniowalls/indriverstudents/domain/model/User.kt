@@ -22,4 +22,9 @@ data class User (
         email = email,
         phone = phone
     ))
+
+    companion object {
+        fun fromJson(data: String): User = Gson().fromJson(data, User::class.java)
+    }
+
 }
