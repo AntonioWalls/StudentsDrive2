@@ -48,7 +48,7 @@ import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
-import coil3.compose.AsyncImage
+import coil.compose.AsyncImage
 import com.antoniowalls.indriverstudents.MainActivity
 import com.antoniowalls.indriverstudents.presentation.components.DefaultIconButton
 import com.antoniowalls.indriverstudents.presentation.components.DefaultTextField
@@ -107,7 +107,7 @@ fun ProfileUpdateContent(navHostController: NavHostController, paddingValues: Pa
                 imageVector = Icons.Default.Edit,
                 tint = Color.White,
                 onClick = {
-                    vm.update()
+                    vm.submit()
                 }
             )
             Spacer(modifier = Modifier.height(20.dp))

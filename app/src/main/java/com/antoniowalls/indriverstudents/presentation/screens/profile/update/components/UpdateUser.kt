@@ -27,6 +27,7 @@ fun UpdateUser(navHostController: NavHostController, vm: ProfileUpdateViewModel 
             ProgressBar()
         }
         is Resource.Success -> {
+            vm.updateUserSession(response.data)
             Toast.makeText(context, "Los datos se actualizaron con exito", Toast.LENGTH_LONG).show() //muestra un mensaje de error desde el servidor
 
         }

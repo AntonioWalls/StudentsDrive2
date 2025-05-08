@@ -42,7 +42,7 @@ import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
-import coil3.compose.AsyncImage
+import coil.compose.AsyncImage
 import com.antoniowalls.indriverstudents.MainActivity
 import com.antoniowalls.indriverstudents.presentation.components.DefaultIconButton
 import com.antoniowalls.indriverstudents.presentation.navigation.screen.profile.ProfileScreen
@@ -124,24 +124,25 @@ fun ProfileInfoContent(navHostController: NavHostController, paddingValues: Padd
                 horizontalAlignment = Alignment.CenterHorizontally,
                 verticalArrangement = Arrangement.Center,
             ) {
-                Box(
-                    modifier = Modifier
-                        .size(115.dp)
-                        .clip(CircleShape)
-                ){
-
-                    if (!vm.user?.image.isNullOrBlank()) { //No es nula ni vacia
-                        AsyncImage(
-                            model = vm.user?.image,
-                            contentDescription = "",
-                            contentScale = ContentScale.Crop
-                        )
-                    }else{
-                        Image(
-                            painter = painterResource(id = R.drawable.user_image),
-                            contentDescription = null
-                        )
-                    }
+                if (!vm.user?.image.isNullOrBlank()) { //No es nula ni vacia
+                    AsyncImage(
+                        modifier = Modifier
+                            .size(120.dp)
+                            .clip(CircleShape)
+                            .align(Alignment.CenterHorizontally),
+                        model = vm.user?.image,
+                        contentDescription = "",
+                        contentScale = ContentScale.Crop
+                    )
+                }else{
+                    Image(
+                        modifier = Modifier
+                            .size(120.dp)
+                            .clip(CircleShape)
+                            .align(Alignment.CenterHorizontally),
+                        painter = painterResource(id = R.drawable.user_image),
+                        contentDescription = null
+                    )
                 }
                 Spacer(modifier = Modifier.height(20.dp))
                 Text(

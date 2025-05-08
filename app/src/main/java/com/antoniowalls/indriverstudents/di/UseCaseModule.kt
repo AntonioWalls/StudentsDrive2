@@ -8,7 +8,8 @@ import com.antoniowalls.indriverstudents.domain.useCases.auth.LoginUseCase
 import com.antoniowalls.indriverstudents.domain.useCases.auth.LogoutUseCase
 import com.antoniowalls.indriverstudents.domain.useCases.auth.RegisterUseCase
 import com.antoniowalls.indriverstudents.domain.useCases.auth.SaveSessionUseCase
-import com.antoniowalls.indriverstudents.domain.useCases.user.UserUpdateUserCase
+import com.antoniowalls.indriverstudents.domain.useCases.auth.UpdateSessionUseCase
+import com.antoniowalls.indriverstudents.domain.useCases.user.UserUpdateUseCase
 import com.antoniowalls.indriverstudents.domain.useCases.user.UserUseCases
 import dagger.Module
 import dagger.Provides
@@ -25,11 +26,12 @@ object UseCaseModule {
         register = RegisterUseCase(authRepository),
         saveSession = SaveSessionUseCase(authRepository),
         getSessionData = GetSessionDataUseCase(authRepository),
-        logout = LogoutUseCase(authRepository)
+        logout = LogoutUseCase(authRepository),
+        updateSessionUseCase = UpdateSessionUseCase(authRepository)
     )
 
    @Provides
    fun provideUserUseCases(userRepository: UserRepository) = UserUseCases(
-       update = UserUpdateUserCase(userRepository)
+       update = UserUpdateUseCase(userRepository)
    )
 }

@@ -10,6 +10,7 @@ import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.runBlocking
+import okhttp3.ConnectionSpec
 import okhttp3.OkHttpClient
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
@@ -22,13 +23,16 @@ object NetworkModule {
 
     @Provides
     @Singleton
-    fun provideOkHttpClient(datastore: LocalDataStore)= OkHttpClient.Builder().addInterceptor {
-        val token = runBlocking {
-            datastore.getData().first().token
-        }
-        val newRequest = it.request().newBuilder().addHeader("Authorization", token?: "").build()
+    fun provideOkHttpClient(datastore: LocalDataStore) = OkHttpClient.Builder()
+        .connectionSpecs(listOf(ConnectionSpec.CLEARTEXT)) // Permite HTTP
+        .addInterceptor {
+            val token = runBlocking {
+                datastore.getData().first().token
+            }
+            val newRequest = it.request().newBuilder().addHeader("Authorization", token ?: "").build()
             it.proceed(newRequest)
-    }.build()
+        }
+        .build()
 
     @Provides
     @Singleton

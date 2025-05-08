@@ -7,7 +7,9 @@ import androidx.compose.runtime.setValue
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.antoniowalls.indriverstudents.domain.model.AuthResponse
 import com.antoniowalls.indriverstudents.domain.model.User
+import com.antoniowalls.indriverstudents.domain.useCases.auth.AuthUseCases
 import com.antoniowalls.indriverstudents.domain.useCases.user.UserUseCases
 import com.antoniowalls.indriverstudents.domain.util.Resource
 import com.antoniowalls.indriverstudents.presentation.screens.profile.update.mapper.toUser
@@ -21,6 +23,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class ProfileUpdateViewModel@Inject constructor(
+    private val authUseCases: AuthUseCases,
     private val userUseCases: UserUseCases,
     private val savedStateHandle: SavedStateHandle,
     @ApplicationContext private val context: Context
@@ -29,7 +32,6 @@ class ProfileUpdateViewModel@Inject constructor(
         private set
     val data = savedStateHandle.get<String>("user")
     val user = User.fromJson(data!!)
-
     var updateResponse by mutableStateOf<Resource<User>?>(null)
         private set
 
@@ -43,6 +45,24 @@ class ProfileUpdateViewModel@Inject constructor(
             phone = user.phone,
             image = user.image
         )
+    }
+
+    fun submit(){
+        if(file == null){
+         update()
+        } else{
+            updateWithImage()
+        }
+    }
+
+    fun updateUserSession(userResponse: User)=viewModelScope.launch{
+        authUseCases.updateSessionUseCase(userResponse)
+    }
+
+    fun updateWithImage () = viewModelScope.launch {
+        updateResponse = Resource.Loading
+        val result = userUseCases.update(user.id.toString(), state.toUser(), file)
+        updateResponse = result
     }
 
     fun update () = viewModelScope.launch {
