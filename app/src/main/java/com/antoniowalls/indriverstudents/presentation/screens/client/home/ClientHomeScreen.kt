@@ -32,6 +32,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
+import com.antoniowalls.indriverstudents.presentation.navigation.Graph
 import com.antoniowalls.indriverstudents.presentation.navigation.graph.client.ClientNavGraph
 import com.antoniowalls.indriverstudents.presentation.navigation.screen.client.ClientScreen
 import com.antoniowalls.indriverstudents.presentation.util.NavigationItem
@@ -50,7 +51,7 @@ fun ClientHomeScreen(navHostController: NavHostController = rememberNavControlle
         ),
         NavigationItem(
             title = "Perfil de usuario",
-            route = ClientScreen.ProfileInfo.route,
+            route = Graph.PROFILE,
             selectedIcon = Icons.Filled.Person,
             unselectedIcon = Icons.Outlined.Person
         ),

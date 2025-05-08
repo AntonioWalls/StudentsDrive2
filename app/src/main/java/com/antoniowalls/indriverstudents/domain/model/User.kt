@@ -1,5 +1,6 @@
 package com.antoniowalls.indriverstudents.domain.model
 
+import com.google.gson.Gson
 import com.google.gson.annotations.SerializedName
 import java.io.Serializable
 //esta cosa fungiría como un DTO del backend (No uno como tal pero parecido)
@@ -14,4 +15,11 @@ data class User (
     @SerializedName("roles") val roles: List<Role>? = null,
     @SerializedName("password") val password: String? =null,
 
-    ) : Serializable
+    ) : Serializable{
+    fun toJson(): String = Gson().toJson(User(
+        name = name,
+        lastname = lastname,
+        email = email,
+        phone = phone
+    ))
+}

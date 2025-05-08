@@ -4,6 +4,7 @@ import com.antoniowalls.indriverstudents.domain.repository.AuthRepository
 import com.antoniowalls.indriverstudents.domain.useCases.auth.AuthUseCases
 import com.antoniowalls.indriverstudents.domain.useCases.auth.GetSessionDataUseCase
 import com.antoniowalls.indriverstudents.domain.useCases.auth.LoginUseCase
+import com.antoniowalls.indriverstudents.domain.useCases.auth.LogoutUseCase
 import com.antoniowalls.indriverstudents.domain.useCases.auth.RegisterUseCase
 import com.antoniowalls.indriverstudents.domain.useCases.auth.SaveSessionUseCase
 import dagger.Module
@@ -20,6 +21,7 @@ object UseCaseModule {
         login = LoginUseCase(authRepository),
         register = RegisterUseCase(authRepository),
         saveSession = SaveSessionUseCase(authRepository),
-        getSessionData = GetSessionDataUseCase(authRepository)
+        getSessionData = GetSessionDataUseCase(authRepository),
+        logout = LogoutUseCase(authRepository)
     )
 }

@@ -7,6 +7,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.navigation
 import com.antoniowalls.indriverstudents.presentation.navigation.Graph
+import com.antoniowalls.indriverstudents.presentation.navigation.graph.profile.ProfileNavGraph
 import com.antoniowalls.indriverstudents.presentation.navigation.screen.auth.AuthScreen
 import com.antoniowalls.indriverstudents.presentation.navigation.screen.client.ClientScreen
 import com.antoniowalls.indriverstudents.presentation.screens.auth.login.LoginScreen
@@ -22,8 +23,6 @@ fun ClientNavGraph(navHostController: NavHostController) {
         startDestination =ClientScreen.MapSearcher.route
     ){
         composable(route = ClientScreen.MapSearcher.route){ ClientMapSearcherScreen(navHostController = navHostController) }
-        composable(route = ClientScreen.ProfileInfo.route){ ProfileInfoScreen(navhostController = navHostController) }
-
-
+        ProfileNavGraph(navHostController)
     }
 }

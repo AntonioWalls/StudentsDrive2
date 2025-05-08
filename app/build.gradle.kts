@@ -51,6 +51,9 @@ dependencies {
     implementation(libs.androidx.ui.tooling.preview)
     implementation(libs.androidx.material3)
 
+    implementation("io.coil-kt.coil3:coil-compose:3.1.0")
+
+
     implementation("androidx.datastore:datastore-preferences:1.0.0")
 
 

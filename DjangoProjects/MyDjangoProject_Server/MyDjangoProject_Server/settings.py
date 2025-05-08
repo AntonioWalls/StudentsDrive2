@@ -27,7 +27,7 @@ SECRET_KEY = 'django-insecure--vrwbz$w^)ffs_@$_)cjzkx2lglzr86kqr8t=%#@p(zm&7l*ix
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-GLOBAL_IP='192.168.1.2'
+GLOBAL_IP='192.168.1.12'
 GLOBAL_HOST= '3000'
 ALLOWED_HOSTS = [GLOBAL_IP] #Dirección IP que puede cambiar en el proyecto cada que reinicia la computadora
 
