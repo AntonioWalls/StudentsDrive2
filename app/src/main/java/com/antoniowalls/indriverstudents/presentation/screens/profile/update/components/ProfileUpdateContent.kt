@@ -5,6 +5,7 @@ import android.content.Intent
 import com.antoniowalls.indriverstudents.R
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -30,6 +31,8 @@ import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -49,6 +52,7 @@ import coil3.compose.AsyncImage
 import com.antoniowalls.indriverstudents.MainActivity
 import com.antoniowalls.indriverstudents.presentation.components.DefaultIconButton
 import com.antoniowalls.indriverstudents.presentation.components.DefaultTextField
+import com.antoniowalls.indriverstudents.presentation.components.DialogCameraOrGallery
 import com.antoniowalls.indriverstudents.presentation.navigation.screen.profile.ProfileScreen
 import com.antoniowalls.indriverstudents.presentation.screens.profile.info.ProfileInfoScreen
 import com.antoniowalls.indriverstudents.presentation.screens.profile.info.ProfileInfoViewModel
@@ -59,6 +63,16 @@ fun ProfileUpdateContent(navHostController: NavHostController, paddingValues: Pa
 
     val activity = LocalContext.current as? Activity
     val state = vm.state
+    vm.resultingActivityHandler.handle()
+    val stateDialog = remember {
+        mutableStateOf(false)
+    }
+    //Esta cosa de acá va abrir el dialogo de la camara o la galeria
+    DialogCameraOrGallery(
+        state = stateDialog,
+        takePhoto = {vm.takePhoto()},
+        pickImage = {vm.pickImage()}
+    )
 
     Box( modifier = Modifier
         .fillMaxSize()
@@ -102,7 +116,7 @@ fun ProfileUpdateContent(navHostController: NavHostController, paddingValues: Pa
         Card(
             modifier = Modifier
                 .fillMaxWidth()
-                .fillMaxHeight(0.7f)
+                .fillMaxHeight(0.75f)
                 .padding(horizontal = 35.dp, vertical = 100.dp),
             colors = CardDefaults.cardColors(containerColor = Color.White),
             elevation = CardDefaults.cardElevation(defaultElevation = 2.dp)
@@ -114,24 +128,31 @@ fun ProfileUpdateContent(navHostController: NavHostController, paddingValues: Pa
                 horizontalAlignment = Alignment.CenterHorizontally,
                 verticalArrangement = Arrangement.Center,
             ) {
-                Box(
-                    modifier = Modifier
-                        .size(115.dp)
-                        .clip(CircleShape)
-                ){
-
-                    if (!vm.user?.image.isNullOrBlank()) { //No es nula ni vacia
-                        AsyncImage(
-                            model = vm.user?.image,
-                            contentDescription = "",
-                            contentScale = ContentScale.Crop
-                        )
-                    }else{
-                        Image(
-                            painter = painterResource(id = R.drawable.user_image),
-                            contentDescription = null
-                        )
-                    }
+                if (!state.image.isNullOrBlank()) { //No es nula ni vacia
+                    AsyncImage(
+                        modifier = Modifier
+                            .size(130.dp)
+                            .clip(CircleShape)
+                            .align(Alignment.CenterHorizontally)
+                            .clickable{
+                                stateDialog.value = true
+                        },
+                        model = state.image,
+                        contentDescription = "",
+                        contentScale = ContentScale.Crop
+                    )
+                }else{
+                    Image(
+                        modifier = Modifier
+                            .size(130.dp)
+                            .clip(CircleShape)
+                            .align(Alignment.CenterHorizontally)
+                            .clickable{
+                                stateDialog.value = true
+                        },
+                        painter = painterResource(id = R.drawable.user_image),
+                        contentDescription = null
+                    )
                 }
                 Spacer(modifier = Modifier.height(20.dp))
                 DefaultTextField(

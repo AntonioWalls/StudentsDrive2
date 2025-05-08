@@ -1,5 +1,6 @@
 package com.antoniowalls.indriverstudents.presentation.screens.profile.update
 
+import android.content.Context
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
@@ -10,14 +11,19 @@ import com.antoniowalls.indriverstudents.domain.model.User
 import com.antoniowalls.indriverstudents.domain.useCases.user.UserUseCases
 import com.antoniowalls.indriverstudents.domain.util.Resource
 import com.antoniowalls.indriverstudents.presentation.screens.profile.update.mapper.toUser
+import com.antoniowalls.indriverstudents.presentation.util.ComposeFileProvider
+import com.antoniowalls.indriverstudents.presentation.util.ResultingActivityHandler
 import dagger.hilt.android.lifecycle.HiltViewModel
+import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.launch
+import java.io.File
 import javax.inject.Inject
 
 @HiltViewModel
 class ProfileUpdateViewModel@Inject constructor(
     private val userUseCases: UserUseCases,
-    private val savedStateHandle: SavedStateHandle
+    private val savedStateHandle: SavedStateHandle,
+    @ApplicationContext private val context: Context
 ): ViewModel() {
     var state by mutableStateOf(ProfileUpdateState())
         private set
@@ -26,6 +32,9 @@ class ProfileUpdateViewModel@Inject constructor(
 
     var updateResponse by mutableStateOf<Resource<User>?>(null)
         private set
+
+    var file : File? = null
+    val resultingActivityHandler = ResultingActivityHandler()
 
     init {
         state = state.copy(
@@ -52,6 +61,22 @@ class ProfileUpdateViewModel@Inject constructor(
 
     fun onPhoneInput(phone: String){
         state = state.copy(phone = phone)
+    }
+
+    fun pickImage() = viewModelScope.launch {
+        val result = resultingActivityHandler.getContent("image/*")
+        if(result!=null){
+            file = ComposeFileProvider.createFileFromUri(context, result)
+            state = state.copy(image = result.toString())
+        }
+    }
+
+    fun takePhoto() = viewModelScope.launch {
+        val result = resultingActivityHandler.takePicturePreview()
+        if(result!=null){
+            state = state.copy(image = ComposeFileProvider.getPathFromBitmap(context, result))
+            file = File(state.image)
+        }
     }
 
 }
