@@ -8,7 +8,7 @@ data class User (
     @SerializedName("id") val id: Long? = null,
     @SerializedName("name") val name: String,
     @SerializedName("lastname") val lastname: String,
-    @SerializedName("email") val email: String,
+    @SerializedName("email") val email: String?= null,
     @SerializedName("phone") val phone: String,
     @SerializedName("image") val image: String? = null,
     @SerializedName("notification_token") val notificationToken: Any? = null,
@@ -17,6 +17,7 @@ data class User (
 
     ) : Serializable{
     fun toJson(): String = Gson().toJson(User(
+        id = id,
         name = name,
         lastname = lastname,
         email = email,

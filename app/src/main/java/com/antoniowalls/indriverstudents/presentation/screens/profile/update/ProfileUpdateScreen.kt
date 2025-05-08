@@ -10,6 +10,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.navigation.NavHostController
 import com.antoniowalls.indriverstudents.presentation.screens.profile.update.components.ProfileUpdateContent
+import com.antoniowalls.indriverstudents.presentation.screens.profile.update.components.UpdateUser
 
 @Composable
 fun ProfileUpdateScreen(navHostController: NavHostController, userParam: String) {
@@ -20,4 +21,5 @@ fun ProfileUpdateScreen(navHostController: NavHostController, userParam: String)
     ){ paddingValues ->
         ProfileUpdateContent(navHostController = navHostController, paddingValues = paddingValues)
     }
+    UpdateUser(navHostController = navHostController)
 }

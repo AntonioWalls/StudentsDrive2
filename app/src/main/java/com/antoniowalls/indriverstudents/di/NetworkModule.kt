@@ -1,11 +1,15 @@
 package com.antoniowalls.indriverstudents.di
 
 import com.antoniowalls.indriverstudents.core.Config
+import com.antoniowalls.indriverstudents.data.local.datastore.LocalDataStore
 import com.antoniowalls.indriverstudents.data.remote.dataSource.remote.service.AuthService
+import com.antoniowalls.indriverstudents.data.remote.dataSource.remote.service.UserService
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
+import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.runBlocking
 import okhttp3.OkHttpClient
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
@@ -18,7 +22,13 @@ object NetworkModule {
 
     @Provides
     @Singleton
-    fun provideOkHttpClient()= OkHttpClient.Builder().build()
+    fun provideOkHttpClient(datastore: LocalDataStore)= OkHttpClient.Builder().addInterceptor {
+        val token = runBlocking {
+            datastore.getData().first().token
+        }
+        val newRequest = it.request().newBuilder().addHeader("Authorization", token?: "").build()
+            it.proceed(newRequest)
+    }.build()
 
     @Provides
     @Singleton
@@ -35,6 +45,12 @@ object NetworkModule {
     @Singleton
     fun provideAuthService(retrofit: Retrofit): AuthService{
         return retrofit.create(AuthService::class.java)
+    } //este servicio ya lo podemos inyectar en el repositorio implementado o donde queramos
+
+    @Provides
+    @Singleton
+    fun provideUserService(retrofit: Retrofit): UserService{
+        return retrofit.create(UserService::class.java)
     } //este servicio ya lo podemos inyectar en el repositorio implementado o donde queramos
 
 }

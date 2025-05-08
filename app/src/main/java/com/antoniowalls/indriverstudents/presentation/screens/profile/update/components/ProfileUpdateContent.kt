@@ -93,7 +93,7 @@ fun ProfileUpdateContent(navHostController: NavHostController, paddingValues: Pa
                 imageVector = Icons.Default.Edit,
                 tint = Color.White,
                 onClick = {
-
+                    vm.update()
                 }
             )
             Spacer(modifier = Modifier.height(20.dp))
