@@ -8,6 +8,8 @@ import androidx.datastore.preferences.preferencesDataStoreFile
 import com.antoniowalls.indriverstudents.core.Config.AUTH_PREF
 import com.antoniowalls.indriverstudents.data.dataSource.local.datastore.LocalDataStore
 import com.antoniowalls.indriverstudents.data.dataSource.location.LocationDataSource
+import com.google.android.libraries.places.api.Places
+import com.google.android.libraries.places.api.net.PlacesClient
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -23,4 +25,8 @@ object LocationModule {
     @Provides
     @Singleton
     fun provideLocationDataSource(@ApplicationContext context: Context): LocationDataSource = LocationDataSource(context)
+
+    @Provides
+    @Singleton
+    fun providePlaceClient(@ApplicationContext context: Context): PlacesClient = Places.createClient(context)
 }

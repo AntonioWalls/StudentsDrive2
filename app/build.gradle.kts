@@ -1,3 +1,5 @@
+import java.util.Properties
+
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
@@ -17,7 +19,15 @@ android {
         versionCode = 1
         versionName = "1.0"
 
-        testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+        testInstrumentationRunner = "androidx.test.runner.AndroidJUnitJUnitRunner"
+
+
+        val properties = Properties()
+        properties.load(project.rootProject.file("local.properties").inputStream())
+
+        buildConfigField("String", "Maps_API_KEY", properties.getProperty("googleMapsApiKey"))
+        manifestPlaceholders["com.google.android.geo.API_KEY"] = properties.getProperty("googleMapsApiKey")
+
     }
 
     buildTypes {
@@ -38,6 +48,7 @@ android {
     }
     buildFeatures {
         compose = true
+        buildConfig = true
     }
 }
 
@@ -73,6 +84,7 @@ dependencies {
     implementation ("com.google.maps.android:maps-compose:6.6.0")
     implementation ("com.google.maps.android:maps-compose-utils:6.6.0")
     implementation ("com.google.maps.android:maps-compose-widgets:6.6.0")
+    implementation("com.google.android.libraries.places:places:3.5.0")
 
 
     implementation("com.google.dagger:hilt-android:2.51.1")

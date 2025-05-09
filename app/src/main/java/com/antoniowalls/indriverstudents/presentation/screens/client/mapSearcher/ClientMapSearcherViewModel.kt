@@ -3,8 +3,10 @@ package com.antoniowalls.indriverstudents.presentation.screens.client.mapSearche
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.antoniowalls.indriverstudents.domain.model.PlacePrediction
 import com.antoniowalls.indriverstudents.domain.useCases.location.LocationUseCases
 import com.google.android.gms.maps.model.LatLng
+import com.google.android.libraries.places.api.model.Place
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -16,10 +18,25 @@ class ClientMapSearcherViewModel @Inject constructor(private val locationUseCase
     private val _location = MutableStateFlow<LatLng?>(null)
     val location: StateFlow<LatLng?> get() = _location
 
+    private val _placePredictions = MutableStateFlow<List<PlacePrediction>>(emptyList())
+    val placePredictions: StateFlow<List<PlacePrediction>> get() = _placePredictions
+
+    private val _selectedPlace = MutableStateFlow<Place?>(null)
+    val selectedPlace: StateFlow<Place?> get() = _selectedPlace
+
     fun startLocationUpdates()=viewModelScope.launch {
         locationUseCases.getLocationUpdates { position ->
             _location.value = position
         }
+    }
+
+    fun getPlacePredictions(query: String) = viewModelScope.launch {
+        _placePredictions.value = locationUseCases.getPlacePredictions(query)
+    }
+
+    fun getPlaceDetails(placeId: String) = viewModelScope.launch {
+        _selectedPlace.value = locationUseCases.getPlaceDetails(placeId)
+
     }
 
 }

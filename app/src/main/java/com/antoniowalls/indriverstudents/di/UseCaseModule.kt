@@ -11,6 +11,8 @@ import com.antoniowalls.indriverstudents.domain.useCases.auth.RegisterUseCase
 import com.antoniowalls.indriverstudents.domain.useCases.auth.SaveSessionUseCase
 import com.antoniowalls.indriverstudents.domain.useCases.auth.UpdateSessionUseCase
 import com.antoniowalls.indriverstudents.domain.useCases.location.GetLocationUpdatesUseCase
+import com.antoniowalls.indriverstudents.domain.useCases.location.GetPlaceDetailsUseCase
+import com.antoniowalls.indriverstudents.domain.useCases.location.GetPlacePredictionsUseCase
 import com.antoniowalls.indriverstudents.domain.useCases.location.LocationUseCases
 import com.antoniowalls.indriverstudents.domain.useCases.user.UserUpdateUseCase
 import com.antoniowalls.indriverstudents.domain.useCases.user.UserUseCases
@@ -40,7 +42,9 @@ object UseCaseModule {
 
     @Provides
     fun provideLocationUseCases(locationRepository: LocationRepository) = LocationUseCases(
-        getLocationUpdates = GetLocationUpdatesUseCase(locationRepository)
+        getLocationUpdates = GetLocationUpdatesUseCase(locationRepository),
+        getPlacePredictions = GetPlacePredictionsUseCase(locationRepository),
+        getPlaceDetails = GetPlaceDetailsUseCase(locationRepository)
     )
 
 }

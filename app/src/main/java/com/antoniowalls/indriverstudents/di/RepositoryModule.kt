@@ -10,6 +10,7 @@ import com.antoniowalls.indriverstudents.data.repository.UserRepositoryImpl
 import com.antoniowalls.indriverstudents.domain.repository.AuthRepository
 import com.antoniowalls.indriverstudents.domain.repository.LocationRepository
 import com.antoniowalls.indriverstudents.domain.repository.UserRepository
+import com.google.android.libraries.places.api.net.PlacesClient
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -26,6 +27,6 @@ object RepositoryModule {
     fun provideUserRepository(userService: UserService): UserRepository = UserRepositoryImpl(userService)
 
     @Provides
-    fun provideLocationRepository(LocationDataSource: LocationDataSource): LocationRepository = LocationRepositoryImpl(LocationDataSource)
+    fun provideLocationRepository(LocationDataSource: LocationDataSource, placesClient: PlacesClient): LocationRepository = LocationRepositoryImpl(LocationDataSource, placesClient)
 
 }

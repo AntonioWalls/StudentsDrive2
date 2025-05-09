@@ -97,7 +97,7 @@ fun ClientHomeScreen(navHostController: NavHostController = rememberNavControlle
         Scaffold(
             topBar ={
                 TopAppBar(
-                    title = { Text(text = "ClientHomeScreen") },
+                    title = { Text(text = "Manu de opciones") },
                     navigationIcon = {
                         IconButton(onClick = {
                             scope.launch {
