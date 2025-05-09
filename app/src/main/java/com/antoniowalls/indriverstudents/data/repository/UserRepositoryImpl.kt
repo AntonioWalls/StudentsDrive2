@@ -1,12 +1,9 @@
-package com.antoniowalls.indriverstudents.data.remote.repository
+package com.antoniowalls.indriverstudents.data.repository
 
-import android.util.Log
-import com.antoniowalls.indriverstudents.data.remote.dataSource.remote.service.UserService
+import com.antoniowalls.indriverstudents.data.dataSource.remote.service.UserService
 import com.antoniowalls.indriverstudents.data.util.HandleRequest
-import com.antoniowalls.indriverstudents.domain.model.ErrorResponse
 import com.antoniowalls.indriverstudents.domain.model.User
 import com.antoniowalls.indriverstudents.domain.repository.UserRepository
-import com.antoniowalls.indriverstudents.domain.util.ErrorHelper
 import com.antoniowalls.indriverstudents.domain.util.Resource
 import okhttp3.MultipartBody
 import okhttp3.RequestBody.Companion.asRequestBody // Importación necesaria para asRequestBody

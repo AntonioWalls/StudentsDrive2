@@ -1,9 +1,9 @@
 package com.antoniowalls.indriverstudents.di
 
 import com.antoniowalls.indriverstudents.core.Config
-import com.antoniowalls.indriverstudents.data.local.datastore.LocalDataStore
-import com.antoniowalls.indriverstudents.data.remote.dataSource.remote.service.AuthService
-import com.antoniowalls.indriverstudents.data.remote.dataSource.remote.service.UserService
+import com.antoniowalls.indriverstudents.data.dataSource.local.datastore.LocalDataStore
+import com.antoniowalls.indriverstudents.data.dataSource.remote.service.AuthService
+import com.antoniowalls.indriverstudents.data.dataSource.remote.service.UserService
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn

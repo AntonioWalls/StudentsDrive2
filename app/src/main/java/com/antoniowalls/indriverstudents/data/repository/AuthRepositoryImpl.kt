@@ -1,14 +1,11 @@
-package com.antoniowalls.indriverstudents.data.remote.repository
+package com.antoniowalls.indriverstudents.data.repository
 
-import android.util.Log
-import com.antoniowalls.indriverstudents.data.local.datastore.LocalDataStore
-import com.antoniowalls.indriverstudents.data.remote.dataSource.remote.service.AuthService
+import com.antoniowalls.indriverstudents.data.dataSource.local.datastore.LocalDataStore
+import com.antoniowalls.indriverstudents.data.dataSource.remote.service.AuthService
 import com.antoniowalls.indriverstudents.data.util.HandleRequest
 import com.antoniowalls.indriverstudents.domain.model.AuthResponse
-import com.antoniowalls.indriverstudents.domain.model.ErrorResponse
 import com.antoniowalls.indriverstudents.domain.model.User
 import com.antoniowalls.indriverstudents.domain.repository.AuthRepository
-import com.antoniowalls.indriverstudents.domain.util.ErrorHelper
 import com.antoniowalls.indriverstudents.domain.util.Resource
 import kotlinx.coroutines.flow.Flow
 

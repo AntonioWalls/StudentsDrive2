@@ -7,6 +7,7 @@ import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.preferencesDataStoreFile
 import com.antoniowalls.indriverstudents.core.Config.AUTH_PREF
 import com.antoniowalls.indriverstudents.data.dataSource.local.datastore.LocalDataStore
+import com.antoniowalls.indriverstudents.data.dataSource.location.LocationDataSource
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -17,16 +18,9 @@ import javax.inject.Singleton
 
 @Module
 @InstallIn(SingletonComponent::class)
-object DatastoreModule {
+object LocationModule {
 
     @Provides
     @Singleton
-    fun providePreferencesDatastore(@ApplicationContext context: Context): DataStore<Preferences> =
-        PreferenceDataStoreFactory.create(
-            produceFile = {
-            context.preferencesDataStoreFile(AUTH_PREF)
-            }
-        )
-    @Provides
-    fun provideLocalDatastore(dataStore: DataStore<Preferences>) = LocalDataStore(dataStore)
+    fun provideLocationDataSource(@ApplicationContext context: Context): LocationDataSource = LocationDataSource(context)
 }

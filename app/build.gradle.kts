@@ -67,6 +67,12 @@ dependencies {
     implementation ("com.squareup.retrofit2:converter-gson:2.11.0")
     implementation("com.squareup.okhttp3:okhttp:4.12.0")
 
+    implementation("com.google.android.gms:play-services-maps:19.0.0")
+    implementation("com.google.android.gms:play-services-location:21.3.0")
+
+    implementation ("com.google.maps.android:maps-compose:6.6.0")
+    implementation ("com.google.maps.android:maps-compose-utils:6.6.0")
+    implementation ("com.google.maps.android:maps-compose-widgets:6.6.0")
 
 
     implementation("com.google.dagger:hilt-android:2.51.1")

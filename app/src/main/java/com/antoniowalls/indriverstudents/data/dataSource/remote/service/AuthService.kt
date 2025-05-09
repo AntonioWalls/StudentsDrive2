@@ -1,4 +1,4 @@
-package com.antoniowalls.indriverstudents.data.remote.dataSource.remote.service
+package com.antoniowalls.indriverstudents.data.dataSource.remote.service
 
 import com.antoniowalls.indriverstudents.domain.model.AuthResponse
 import com.antoniowalls.indriverstudents.domain.model.User
@@ -13,8 +13,8 @@ interface AuthService {
     @FormUrlEncoded //este solo se usa cuando tengamos field en los parametros
     @POST("auth/login")
     suspend fun login(
-        @Field("email") email: String,
-        @Field("password") password: String,
+    @Field("email") email: String,
+    @Field("password") password: String,
     ): Response<AuthResponse>
 
     @POST("auth/register")

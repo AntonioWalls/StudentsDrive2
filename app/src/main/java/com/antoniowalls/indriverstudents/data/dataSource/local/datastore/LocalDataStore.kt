@@ -1,10 +1,10 @@
-package com.antoniowalls.indriverstudents.data.local.datastore
+package com.antoniowalls.indriverstudents.data.dataSource.local.datastore
 
 import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.core.edit
 import androidx.datastore.preferences.core.stringPreferencesKey
-import com.antoniowalls.indriverstudents.core.Config.AUTH_KEY
+import com.antoniowalls.indriverstudents.core.Config
 import com.antoniowalls.indriverstudents.domain.model.AuthResponse
 import com.antoniowalls.indriverstudents.domain.model.User
 import kotlinx.coroutines.flow.Flow
@@ -16,14 +16,14 @@ class LocalDataStore(private val datastore: DataStore<Preferences>){
 
     //Método para guardar el token en el datastore
     suspend fun save(authResponse: AuthResponse){
-        val datastoreKey = stringPreferencesKey(AUTH_KEY)
+        val datastoreKey = stringPreferencesKey(Config.AUTH_KEY)
         datastore.edit { pref ->
             pref[datastoreKey] = authResponse.toJson()
         }
     }
 
     suspend fun update(user: User){
-        val datastoreKey = stringPreferencesKey(AUTH_KEY)
+        val datastoreKey = stringPreferencesKey(Config.AUTH_KEY)
         val authResponse = runBlocking {
             getData().first() //los datos de sesión que tenemos hasta el momento
         }
@@ -41,18 +41,18 @@ class LocalDataStore(private val datastore: DataStore<Preferences>){
 
     //método para eliminar el token del datastore
     suspend fun delete(){
-        val datastoreKey = stringPreferencesKey(AUTH_KEY)
+        val datastoreKey = stringPreferencesKey(Config.AUTH_KEY)
         datastore.edit { pref ->
             pref.remove(datastoreKey)
         }
 
     }
     //método para obtener el token del datastore
-    fun getData(): Flow<AuthResponse>{
-        val datastoreKey = stringPreferencesKey(AUTH_KEY)
+    fun getData(): Flow<AuthResponse> {
+        val datastoreKey = stringPreferencesKey(Config.AUTH_KEY)
         return datastore.data.map { pref ->
             if(pref[datastoreKey] != null){
-                AuthResponse.fromJson(pref[datastoreKey]!!)
+                AuthResponse.Companion.fromJson(pref[datastoreKey]!!)
             } else{
                 AuthResponse()
             }

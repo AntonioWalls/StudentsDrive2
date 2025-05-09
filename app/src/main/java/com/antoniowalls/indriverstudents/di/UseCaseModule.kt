@@ -1,6 +1,7 @@
 package com.antoniowalls.indriverstudents.di
 
 import com.antoniowalls.indriverstudents.domain.repository.AuthRepository
+import com.antoniowalls.indriverstudents.domain.repository.LocationRepository
 import com.antoniowalls.indriverstudents.domain.repository.UserRepository
 import com.antoniowalls.indriverstudents.domain.useCases.auth.AuthUseCases
 import com.antoniowalls.indriverstudents.domain.useCases.auth.GetSessionDataUseCase
@@ -9,6 +10,8 @@ import com.antoniowalls.indriverstudents.domain.useCases.auth.LogoutUseCase
 import com.antoniowalls.indriverstudents.domain.useCases.auth.RegisterUseCase
 import com.antoniowalls.indriverstudents.domain.useCases.auth.SaveSessionUseCase
 import com.antoniowalls.indriverstudents.domain.useCases.auth.UpdateSessionUseCase
+import com.antoniowalls.indriverstudents.domain.useCases.location.GetLocationUpdatesUseCase
+import com.antoniowalls.indriverstudents.domain.useCases.location.LocationUseCases
 import com.antoniowalls.indriverstudents.domain.useCases.user.UserUpdateUseCase
 import com.antoniowalls.indriverstudents.domain.useCases.user.UserUseCases
 import dagger.Module
@@ -34,4 +37,10 @@ object UseCaseModule {
    fun provideUserUseCases(userRepository: UserRepository) = UserUseCases(
        update = UserUpdateUseCase(userRepository)
    )
+
+    @Provides
+    fun provideLocationUseCases(locationRepository: LocationRepository) = LocationUseCases(
+        getLocationUpdates = GetLocationUpdatesUseCase(locationRepository)
+    )
+
 }

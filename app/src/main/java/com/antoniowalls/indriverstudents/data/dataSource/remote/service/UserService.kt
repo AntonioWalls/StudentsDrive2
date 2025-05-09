@@ -1,4 +1,4 @@
-package com.antoniowalls.indriverstudents.data.remote.dataSource.remote.service
+package com.antoniowalls.indriverstudents.data.dataSource.remote.service
 
 import com.antoniowalls.indriverstudents.domain.model.User
 import okhttp3.MultipartBody
