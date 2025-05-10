@@ -1,6 +1,8 @@
 package com.antoniowalls.indriverstudents.presentation.screens.client.mapSearcher
 
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.antoniowalls.indriverstudents.domain.model.PlacePrediction
@@ -24,6 +26,8 @@ class ClientMapSearcherViewModel @Inject constructor(private val locationUseCase
     private val _selectedPlace = MutableStateFlow<Place?>(null)
     val selectedPlace: StateFlow<Place?> get() = _selectedPlace
 
+    var isInteractingWithMap by mutableStateOf(false)
+
     fun startLocationUpdates()=viewModelScope.launch {
         locationUseCases.getLocationUpdates { position ->
             _location.value = position
@@ -34,8 +38,10 @@ class ClientMapSearcherViewModel @Inject constructor(private val locationUseCase
         _placePredictions.value = locationUseCases.getPlacePredictions(query)
     }
 
-    fun getPlaceDetails(placeId: String) = viewModelScope.launch {
-        _selectedPlace.value = locationUseCases.getPlaceDetails(placeId)
+    fun getPlaceDetails(placeId: String, onPlaceSelected: (place:Place) -> Unit) = viewModelScope.launch {
+        val place = locationUseCases.getPlaceDetails(placeId)
+        _selectedPlace.value = place
+        onPlaceSelected(place)
 
     }
 

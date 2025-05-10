@@ -36,7 +36,7 @@ class LocationRepositoryImpl(private val locationDataSource: LocationDataSource,
     override suspend fun getPlaceDetails(placeId: String): Place {
         val request = FetchPlaceRequest.builder(
             placeId,
-            listOf(Place.Field.ID, Place.Field.NAME, Place.Field.LAT_LNG)
+            listOf(Place.Field.ID, Place.Field.NAME, Place.Field.LAT_LNG, Place.Field.ADDRESS)
         ).build()
         return suspendCancellableCoroutine { continuation ->
             placesClient.fetchPlace(request)
