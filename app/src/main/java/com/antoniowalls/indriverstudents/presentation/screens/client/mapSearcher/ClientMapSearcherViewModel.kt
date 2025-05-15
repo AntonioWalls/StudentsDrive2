@@ -23,8 +23,14 @@ class ClientMapSearcherViewModel @Inject constructor(private val locationUseCase
     private val _placePredictions = MutableStateFlow<List<PlacePrediction>>(emptyList())
     val placePredictions: StateFlow<List<PlacePrediction>> get() = _placePredictions
 
-    private val _selectedPlace = MutableStateFlow<Place?>(null)
-    val selectedPlace: StateFlow<Place?> get() = _selectedPlace
+    private val _originPlace = MutableStateFlow<Place?>(null)
+    val originPlace: StateFlow<Place?> get() = _originPlace
+
+    private val _destinationPlace = MutableStateFlow<Place?>(null)
+    val destinationPlace: StateFlow<Place?> get() = _destinationPlace
+
+    private val _route = MutableStateFlow<List<LatLng>?>(null)
+    val route: StateFlow<List<LatLng>?> get() = _route
 
     var isInteractingWithMap by mutableStateOf(false)
 
@@ -38,11 +44,27 @@ class ClientMapSearcherViewModel @Inject constructor(private val locationUseCase
         _placePredictions.value = locationUseCases.getPlacePredictions(query)
     }
 
-    fun getPlaceDetails(placeId: String, onPlaceSelected: (place:Place) -> Unit) = viewModelScope.launch {
+    fun getPlaceDetails(placeId: String,isOrigin: Boolean, onPlaceSelected: (place:Place) -> Unit) = viewModelScope.launch {
         val place = locationUseCases.getPlaceDetails(placeId)
-        _selectedPlace.value = place
+        if(isOrigin){
+            _originPlace.value = place
+        }else{
+            _destinationPlace.value = place
+        }
         onPlaceSelected(place)
+    }
+
+    fun getPlaceFromLatLng(latLng: LatLng) = viewModelScope.launch {
+        val place = locationUseCases.getPlaceFromLatLng(latLng)
+        _originPlace.value = place
 
     }
+
+    fun getRoute() = viewModelScope.launch {
+        if(originPlace.value != null && destinationPlace.value != null){
+            _route.value = locationUseCases.getRoute(originPlace.value!!.latLng!!, destinationPlace.value!!.latLng!!)
+        }
+    }
+
 
 }

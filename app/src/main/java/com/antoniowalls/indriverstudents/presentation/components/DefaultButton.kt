@@ -17,25 +17,27 @@ import androidx.compose.ui.unit.sp
 
 @Composable
 fun DefaultButton(
-    modifier: Modifier,
+    modifier: Modifier = Modifier,
     text: String,
     onClick: () -> Unit,
-    color: Color = Color.White,
+    backgroundColor: Color = Color.White,    // renombrado
+    contentColor: Color = Color.Black,       // nuevo parámetro
     height: Dp = 55.dp,
     width: Dp = 250.dp
-){
-    Box(
-        modifier = Modifier.fillMaxWidth()
-    ) {
+) {
+    Box(modifier = Modifier.fillMaxWidth()) {
         Button(
             modifier = modifier
                 .align(Alignment.Center)
                 .width(width)
                 .height(height),
-            onClick = { onClick() },
-            colors = ButtonDefaults.buttonColors(color)
+            onClick = onClick,
+            colors = ButtonDefaults.buttonColors(
+                containerColor = backgroundColor,
+                contentColor = contentColor
+            )
         ) {
-            Text(text, fontSize = 18.sp, color = Color.Black)
+            Text(text, fontSize = 18.sp, color = contentColor)
         }
     }
 }

@@ -13,3 +13,5 @@
 .externalNativeBuild
 .cxx
 local.properties
+DjangoProjects/MyDjangoProject_Server/env/
+/app/src/main/res/values/strings.xml

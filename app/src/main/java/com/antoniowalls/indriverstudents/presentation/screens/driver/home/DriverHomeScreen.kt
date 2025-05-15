@@ -1,4 +1,4 @@
-package com.antoniowalls.indriverstudents.presentation.screens.client.home
+package com.antoniowalls.indriverstudents.presentation.screens.driver.home
 
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Spacer
@@ -34,18 +34,20 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import com.antoniowalls.indriverstudents.presentation.navigation.Graph
 import com.antoniowalls.indriverstudents.presentation.navigation.graph.client.ClientNavGraph
+import com.antoniowalls.indriverstudents.presentation.navigation.graph.driver.DriverNavGraph
 import com.antoniowalls.indriverstudents.presentation.navigation.screen.client.ClientScreen
+import com.antoniowalls.indriverstudents.presentation.navigation.screen.driver.DriverScreen
 import com.antoniowalls.indriverstudents.presentation.util.NavigationItem
 import kotlinx.coroutines.launch
 
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun ClientHomeScreen(navHostController: NavHostController = rememberNavController()) {
+fun DriverHomeScreen(navHostController: NavHostController = rememberNavController()) {
     val items = listOf(
         NavigationItem(
-            title = "Mapa de busqueda",
-            route = ClientScreen.MapSearcher.route,
+            title = "Mapa de estado",
+            route = DriverScreen.MapMyLocation.route,
             selectedIcon = Icons.Filled.LocationOn,
             unselectedIcon = Icons.Outlined.LocationOn
         ),
@@ -118,7 +120,7 @@ fun ClientHomeScreen(navHostController: NavHostController = rememberNavControlle
             }
         ){ paddingValues ->
             Box(modifier = Modifier.padding(paddingValues)) {
-                ClientNavGraph(navHostController)
+                DriverNavGraph(navHostController)
             }
         }
     }

@@ -1,6 +1,7 @@
 package com.antoniowalls.indriverstudents.di
 
 import android.content.Context
+import android.location.Geocoder
 import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.PreferenceDataStoreFactory
 import androidx.datastore.preferences.core.Preferences
@@ -16,6 +17,7 @@ import dagger.hilt.InstallIn
 import dagger.hilt.android.qualifiers.ActivityContext
 import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
+import java.util.Locale
 import javax.inject.Singleton
 
 @Module
@@ -25,6 +27,10 @@ object LocationModule {
     @Provides
     @Singleton
     fun provideLocationDataSource(@ApplicationContext context: Context): LocationDataSource = LocationDataSource(context)
+
+    @Provides
+    @Singleton
+    fun provideGeoCoder(@ApplicationContext context: Context) = Geocoder(context, Locale.getDefault())
 
     @Provides
     @Singleton

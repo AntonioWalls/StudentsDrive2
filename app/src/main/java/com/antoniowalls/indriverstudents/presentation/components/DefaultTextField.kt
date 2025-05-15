@@ -15,6 +15,9 @@ import androidx.compose.material3.TextField
 import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.focus.FocusRequester
+import androidx.compose.ui.focus.focusRequester
+import androidx.compose.ui.focus.focusTarget
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.text.input.KeyboardType
@@ -25,23 +28,34 @@ import androidx.compose.ui.unit.dp
 
 @Composable
 fun DefaultTextField(
-    modifier: Modifier,
+    // 1) El modifier sigue igual, con valor por defecto
+    modifier: Modifier = Modifier,
+    // 2) Parámetro nuevo, opcional, para el FocusRequester
+    focusRequester: FocusRequester? = null,
+    // 3) Otro opcional para focusTarget()
+    useFocusTarget: Boolean = false,
     value: String,
     label: String,
     icon: ImageVector,
     onValueChange: (value: String) -> Unit,
     keyboardType: KeyboardType = KeyboardType.Text,
-    hideText: Boolean = false
+    hideText: Boolean = false,
+    enabled: Boolean = true,
+    background: Color = Color.White
 ) {
+
   Box(
       modifier = Modifier
-          .height(55.dp)
+          .height(60.dp)
           .background(
-              color = Color.White,
+              color = background,
               shape = RoundedCornerShape(topStart = 15.dp, bottomEnd = 15.dp)
           )
   ) {
       TextField(
+          modifier = modifier
+              .then( if (focusRequester != null) Modifier.focusRequester(focusRequester) else Modifier )
+              .then( if (useFocusTarget) Modifier.focusTarget() else Modifier ),
           value = value,
           onValueChange = {text ->
               onValueChange(text)
@@ -52,6 +66,7 @@ fun DefaultTextField(
                   color = Color.Black
               )
           },
+          enabled = enabled,
           leadingIcon = {
               Row () {
                   Icon(

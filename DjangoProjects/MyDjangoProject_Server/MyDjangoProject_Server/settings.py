@@ -27,9 +27,9 @@ SECRET_KEY = 'django-insecure--vrwbz$w^)ffs_@$_)cjzkx2lglzr86kqr8t=%#@p(zm&7l*ix
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-GLOBAL_IP='192.168.1.2'
+GLOBAL_IP='192.168.1.6'
 GLOBAL_HOST= '3000'
-ALLOWED_HOSTS = [GLOBAL_IP] #Dirección IP que puede cambiar en el proyecto cada que reinicia la computadora
+ALLOWED_HOSTS = ['127.0.0.1',GLOBAL_IP] #Dirección IP que puede cambiar en el proyecto cada que reinicia la computadora
 
 
 # Application definition
@@ -43,6 +43,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'rest_framework',
     'rest_framework_simplejwt',
+    'channels',
     'users', #Modulo de usuarios
     'authentication', #Modulo de autenticación
     'roles' #Modulo o tabla de roles
@@ -76,6 +77,7 @@ TEMPLATES = [
 ]
 
 WSGI_APPLICATION = 'MyDjangoProject_Server.wsgi.application'
+ASGI_APPLICATION = 'MyDjangoProject_Server.asgi.application'
 
 
 # Database
@@ -129,6 +131,15 @@ SIMPLE_JWT = {
     'SIGNING_KEY': SECRET_KEY,
     'AUTH_HEADER_TYPES': ('Bearer',),
     
+}
+
+CHANNEL_LAYERS = {
+    'default':{
+        "BACKEND": 'channels_redis.core.RedisChannelLayer',
+        "CONFIG": {
+            'hosts': [('127.0.0.1', 6379)]
+        }
+    }
 }
 
 # Internationalization

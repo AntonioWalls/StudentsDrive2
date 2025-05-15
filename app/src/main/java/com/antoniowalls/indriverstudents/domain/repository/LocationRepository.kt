@@ -10,4 +10,6 @@ interface LocationRepository {
     fun getLocationUpdates(call: (position: LatLng) -> Unit)
     suspend fun getPlacePredictions(query: String): List<PlacePrediction>
     suspend fun getPlaceDetails(placeId: String): Place
+    suspend fun getPlaceFromLatLng(latLng: LatLng): Place?
+    suspend fun getRoute(origin: LatLng, destination: LatLng): List<LatLng>?
 }

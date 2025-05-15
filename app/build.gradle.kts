@@ -21,13 +21,6 @@ android {
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitJUnitRunner"
 
-
-        val properties = Properties()
-        properties.load(project.rootProject.file("local.properties").inputStream())
-
-        buildConfigField("String", "Maps_API_KEY", properties.getProperty("googleMapsApiKey"))
-        manifestPlaceholders["com.google.android.geo.API_KEY"] = properties.getProperty("googleMapsApiKey")
-
     }
 
     buildTypes {

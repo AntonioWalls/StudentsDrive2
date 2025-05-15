@@ -1,8 +1,10 @@
 package com.antoniowalls.indriverstudents.di
 
+import android.location.Geocoder
 import com.antoniowalls.indriverstudents.data.dataSource.local.datastore.LocalDataStore
 import com.antoniowalls.indriverstudents.data.dataSource.location.LocationDataSource
 import com.antoniowalls.indriverstudents.data.dataSource.remote.service.AuthService
+import com.antoniowalls.indriverstudents.data.dataSource.remote.service.GoogleMapsService
 import com.antoniowalls.indriverstudents.data.dataSource.remote.service.UserService
 import com.antoniowalls.indriverstudents.data.repository.AuthRepositoryImpl
 import com.antoniowalls.indriverstudents.data.repository.LocationRepositoryImpl
@@ -27,6 +29,6 @@ object RepositoryModule {
     fun provideUserRepository(userService: UserService): UserRepository = UserRepositoryImpl(userService)
 
     @Provides
-    fun provideLocationRepository(LocationDataSource: LocationDataSource, placesClient: PlacesClient): LocationRepository = LocationRepositoryImpl(LocationDataSource, placesClient)
+    fun provideLocationRepository(LocationDataSource: LocationDataSource, placesClient: PlacesClient, geocoder: Geocoder, googleMapsService: GoogleMapsService, apiKey: String): LocationRepository = LocationRepositoryImpl(LocationDataSource, placesClient, geocoder, googleMapsService, apiKey)
 
 }

@@ -1,0 +1,29 @@
+[33m6739818[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32mmaster[m[33m, [m[1;31morigin/master[m[33m, [m[1;31morigin/HEAD[m[33m)[m modal in searcherContent
+[33mc4e0133[m Initial project commit with secure API
+[33ma3033a0[m Implement of maps API, update build config and clean code references
+[33m8c93fca[m Implementation of google maps and localization
+[33mfc4b15d[m bug fix: user image doesn't show
+[33mc4ca668[m implementation of user image selector in profile
+[33mb41e206[m edit user
+[33m1cf969c[m desing of edit user screen
+[33m6384065[m navs and user profile screen
+[33m17b30d6[m navigations flows for main entry of the app
+[33m3c3bd3c[m complete navigation login flow
+[33m0886f66[m implementation of datastores for sessions
+[33m5c1d09b[m connection of API with login and register
+[33m392c16a[m implementation of clean architechture
+[33m3fd3622[m get methods for users
+[33mb4d49a3[m implementation of JWT Token
+[33m78992bf[m implementation of roles
+[33m32ba614[m cambio
+[33m41daf8c[m changes in models
+[33mf9f391a[m changes to isolate auth
+[33m38812a2[m new method post for users and JWT implementation
+[33m537ab01[m first endpoint of users
+[33mf6d3756[m creation of backend app in Django
+[33m21078b6[m generation of states with hilt in RegisterScreen
+[33mcf1eb3e[m implementation of dagger hilt and validation of login form
+[33mbd43141[m Register Screen and changes in the presentation layer
+[33mf6fcfad[m navigations flows with graph
+[33m0c2cba3[m login desing complete
+[33m2c0222d[m desing of login screen
